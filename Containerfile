@@ -1,0 +1,17 @@
+FROM postgres:17.5-bookworm
+
+# https://www.postgresql.org/docs/current/textsearch-dictionaries.html
+# https://github.com/Tecktron/docker-PostgreSQL-Hunspell
+RUN apt-get update && apt-get install -y \
+    hunspell-en-us \
+    && rm -rf /var/lib/apt/lists/*
+
+# update the dictionary files.
+RUN /usr/sbin/pg_updatedicts
+
+# copy in maw-media specific thesaurus
+COPY init-maw_media.sql /docker-entrypoint-initdb.d/
+COPY maw_media_thesaurus.ths /
+
+RUN set -eux; \
+    mv /maw_media_thesaurus.ths "$(pg_config --sharedir)/tsearch_data/"
