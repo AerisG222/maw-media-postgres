@@ -1,0 +1,22 @@
+name: CI
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: build container
+      run: ./build.sh
+
+    - name: push container
+      run: ./push.sh
+      env:
+        DH_USER: ${{ secrets.DH_USER }}
+        DH_PASS: ${{ secrets.DH_PASS }}
