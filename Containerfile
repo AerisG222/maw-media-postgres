@@ -11,7 +11,7 @@ RUN /usr/sbin/pg_updatedicts
 
 # copy in maw-media specific thesaurus
 COPY init-maw_media.sql /docker-entrypoint-initdb.d/
-COPY maw_media_thesaurus.ths /
+COPY maw_media_xsyn.rules /
 
 RUN set -eux; \
-    mv /maw_media_thesaurus.ths "$(pg_config --sharedir)/tsearch_data/"
+    mv /maw_media_xsyn.rules "$(pg_config --sharedir)/tsearch_data/"

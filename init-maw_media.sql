@@ -2,13 +2,13 @@ CREATE DATABASE maw_media;
 
 \c maw_media
 
+CREATE EXTENSION dict_xsyn;
 CREATE ROLE maw_media;
 
-CREATE TEXT SEARCH DICTIONARY maw_media_thesaurus
+ALTER TEXT SEARCH DICTIONARY xsyn
 (
-    TEMPLATE = thesaurus,
-    DictFile = maw_media_thesaurus,
-    Dictionary = pg_catalog.english_stem
+    MATCHSYNONYMS = true,
+    RULES = maw_media_xsyn
 );
 
 CREATE TEXT SEARCH DICTIONARY english_hunspell (
@@ -28,6 +28,6 @@ ALTER TEXT SEARCH CONFIGURATION	english
         hword,
         hword_part
     WITH
-        maw_media_thesaurus,
+        xsyn,
         english_hunspell,
         english_stem;
