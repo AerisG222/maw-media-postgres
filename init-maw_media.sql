@@ -11,13 +11,6 @@ CREATE TEXT SEARCH DICTIONARY maw_media_thesaurus
     Dictionary = pg_catalog.english_stem
 );
 
--- simply remove stop words and continue
-CREATE TEXT SEARCH DICTIONARY english_simple (
-	template = simple,
-	StopWords = english,
-	accept = false
-);
-
 CREATE TEXT SEARCH DICTIONARY english_hunspell (
 	template = ispell,
 	DictFile = en_us,
@@ -36,6 +29,5 @@ ALTER TEXT SEARCH CONFIGURATION	english
         hword_part
     WITH
         maw_media_thesaurus,
-        english_simple,
         english_hunspell,
         english_stem;
