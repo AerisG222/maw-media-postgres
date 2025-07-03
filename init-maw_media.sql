@@ -2,6 +2,8 @@ CREATE DATABASE maw_media;
 
 \c maw_media
 
+CREATE ROLE maw_media;
+
 CREATE TEXT SEARCH DICTIONARY maw_media_thesaurus
 (
     TEMPLATE = thesaurus,
