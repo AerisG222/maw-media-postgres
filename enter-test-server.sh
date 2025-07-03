@@ -3,5 +3,5 @@
 psql \
     -U postgres \
     -h localhost \
-    -d maw_media \
+    -d postgres \
     -p 8765

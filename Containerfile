@@ -9,8 +9,7 @@ RUN apt-get update && apt-get install -y \
 # update the dictionary files.
 RUN /usr/sbin/pg_updatedicts
 
-# copy in maw-media specific thesaurus
-COPY init-maw_media.sql /docker-entrypoint-initdb.d/
+# copy in maw-media specific xsyn rules
 COPY maw_media_xsyn.rules /
 
 RUN set -eux; \
