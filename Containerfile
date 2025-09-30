@@ -1,4 +1,4 @@
-FROM postgres:17.5-bookworm
+FROM postgres:18-trixie
 
 # https://www.postgresql.org/docs/current/textsearch-dictionaries.html
 # https://github.com/Tecktron/docker-PostgreSQL-Hunspell
