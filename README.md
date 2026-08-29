@@ -1,9 +1,31 @@
 # maw-media-postgres
 
-This project contains the custom postgres image build for maw-media.  In particular, this sets up a few things:
+Retired.  maw-media now runs the official `postgres:18-trixie` image directly.
 
-- hunspell en_us dictionary
-- custom thesaurus
+This repo existed to bake three files into a custom postgres image so that
+postgres full text search could use a hunspell dictionary and a custom xsyn
+rules file - postgres only reads text search dictionaries from
+`$SHAREDIR/tsearch_data`, and that was the obvious way to get them there.
+Mounting the same three files into the stock image does the job just as well,
+without a build to maintain and without lagging behind upstream postgres
+releases.
+
+Everything moved into the maw-media repo:
+
+- `src/db-postgres/tsearch_data/` - `en_us.dict`, `en_us.affix` and
+  `maw_media_xsyn.rules`
+- `src/db-postgres/gen-tsearch-data.sh` - regenerates the hunspell dictionaries
+  from the `hunspell-en-us` package by running `pg_updatedicts` inside the stock
+  image
+- `deploy/templates/kube.yml.j2` - mounts the three files into the pod
+
+The one thing to know if you do this elsewhere: mount the files individually
+rather than mounting the directory.  A directory mount hides the stock contents
+of `tsearch_data`, which includes the `english.stop` that
+`StopWords = english` depends on.
+
+The old `aerisg222/maw-media-postgres` images are still on Docker Hub and are no
+longer built or pushed.
 
 ## Thanks
 
